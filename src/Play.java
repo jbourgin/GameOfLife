@@ -7,15 +7,15 @@ public class Play extends JButton implements ActionListener {
   boolean playing = false;
   Timer playGame;
 
-  public Play(Game2D game, Grid grid) {
+  public Play() {
     super("Play");
     addActionListener(this);
 
     int delay = 100;
     ActionListener stepGame = new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
-        game.step();
-        grid.update();
+        GUI.game.step();
+        GUI.grid.update();
       }
     };
     this.playGame = new Timer(delay, stepGame);
@@ -33,12 +33,15 @@ public class Play extends JButton implements ActionListener {
       }
   }
 
+  public void pause() {
+    this.playGame.stop();
+    this.playing = false;
+    this.setText("Play");
+  }
+
   public void actionPerformed(ActionEvent e) {
     if (this.playing) {
-      this.playGame.stop();
-      this.playing = false;
-      this.setText("Play");
-      //GUI.frame.pack();
+      this.pause();
     }
     else {
       this.playGame.start();

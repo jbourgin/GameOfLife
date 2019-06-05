@@ -33,33 +33,25 @@ class Game2D extends Game {
     if(i == 0) {
       if(j == 0) {
         return this.get(i+1,j) + this.get(i,j+1) + this.get(i+1,j+1);
-      }
-      else if(j == this.height-1) {
+      } else if(j == this.width-1) {
         return this.get(i+1,j) + this.get(i,j-1) + this.get(i+1,j-1);
-      }
-      else {
+      } else {
         return this.get(i+1,j) + this.get(i,j-1)+ this.get(i+1,j-1) + this.get(i,j+1) + this.get(i+1,j+1);
       }
-    }
-    else if(i == this.width-1) {
+    } else if(i == this.height-1) {
       if(j == 0) {
         return this.get(i-1,j) + this.get(i,j+1) + this.get(i-1,j+1);
-      }
-      else if(j == this.height-1) {
+      } else if(j == this.width-1) {
         return this.get(i-1,j) + this.get(i,j-1)+ this.get(i-1,j-1);
-      }
-      else {
+      } else {
         return this.get(i-1,j) + this.get(i,j-1)+ this.get(i-1,j-1) + this.get(i,j+1) + this.get(i-1,j+1);
       }
-    }
-    else {
+    } else {
       if(j == 0) {
         return this.get(i-1,j) + this.get(i,j+1) + this.get(i-1,j+1) + this.get(i+1,j) + this.get(i+1,j+1);
-      }
-      else if(j == this.height-1) {
+      } else if(j == this.width-1) {
         return this.get(i-1,j) + this.get(i,j-1)+ this.get(i-1,j-1) + this.get(i+1,j) + this.get(i+1,j-1);
-      }
-      else {
+      } else {
         return this.get(i-1,j) + this.get(i,j-1)+ this.get(i-1,j-1) + this.get(i,j+1) + this.get(i-1,j+1) + this.get(i+1,j) + this.get(i+1,j-1) + this.get(i+1,j+1);
       }
     }
@@ -75,9 +67,9 @@ class Game2D extends Game {
 
   public void step() {
     int[] newGrid = new int[this.width * this.height];
-    for(int i = 0; i < this.width; i++){
-      for(int j = 0; j < this.height; j++){
-        newGrid[i * width + j] = cellStatus(i,j);
+    for(int i = 0; i < this.height; i++){
+      for(int j = 0; j < this.width; j++){
+        newGrid[i * this.width + j] = cellStatus(i,j);
       }
     }
     this.grid = newGrid;

@@ -8,11 +8,9 @@ public class GUI {
   static int height = 100;
   public static JPanel mainPanel;
   public static JFrame frame;
-
-  public static JMenuBar menuBar = new JMenuBar();
-  public static JMenu menuGame = new JMenu("Game");
-  public static JMenuItem itemGame1D = new JMenuItem("Game 1D");
-  public static JMenuItem itemGame2D = new JMenuItem("Game 2D");
+  public static Game game;
+  public static Grid grid;
+  public static Play play;
 
   private static void createAndShowGUI() {
 
@@ -23,56 +21,34 @@ public class GUI {
     frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
     JFrame.setDefaultLookAndFeelDecorated(true);*/
     GUI.mainPanel = new JPanel();
-
-    menuBar.add(menuGame);
-
-    itemGame2D.addActionListener(new ActionListener() {
-        //@override
-        public void actionPerformed(ActionEvent e) {
-            Game2D game = new Game2D(GUI.width, GUI.height);
-            Grid grid = new Grid(game);
-            Play play = new Play(game,grid);
-            GUI.mainPanel.add(grid);
-        }
-    });
-
-    itemGame1D.addActionListener(new ActionListener() {
-        //@override
-        public void actionPerformed(ActionEvent e) {
-            Game1D game = new Game1D(GUI.width * GUI.height);
-            Grid1 grid = new Grid1(game);
-            Play play = new Play(game,grid);
-            GUI.mainPanel.add(grid);
-        }
-    });
-
-    menuGame.add(itemGame1D);
-    menuGame.add(itemGame2D);
-
-    GUI.frame.setJMenuBar(menuBar);
+    GUI.setMenu();
+    GUI.play = new Play();
+    GUI.initGame2D();
+    GUI.mainPanel.add(GUI.grid);
 
     JButton step = new JButton("Step");
     step.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        game.step();
-        grid.update();
+        GUI.game.step();
+        GUI.grid.update();
       }
     });
 
     JButton random = new JButton("Random");
     random.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        game.initRandom();
-        grid.update();
+        GUI.game.initRandom();
+        GUI.grid.update();
       }
     });
 
     JTextField delayValue = new JTextField();
+    delayValue.setText(Integer.toString(play.playGame.getDelay()));
 
     JButton accel = new JButton("+");
     accel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        play.accelerate();
+        GUI.play.accelerate();
         delayValue.setText(Integer.toString(play.playGame.getDelay()));
       }
     });
@@ -80,7 +56,7 @@ public class GUI {
     JButton decel = new JButton("-");
     decel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        play.decelerate();
+        GUI.play.decelerate();
         delayValue.setText(Integer.toString(play.playGame.getDelay()));
       }
     });
@@ -94,11 +70,6 @@ public class GUI {
 
     GUI.frame.add(mainPanel);
 
-    //Grid grid = new Grid();
-    //frame.add(grid);
-
-    //frame.setSize(100,100);
-    //frame.setLayout(null);
     GUI.frame.pack();
 
     //Display the window.
@@ -107,5 +78,58 @@ public class GUI {
 
   public static void main(String[] arg) {
     createAndShowGUI();
+  }
+
+  public static void setMenu() {
+    JMenuBar menuBar = new JMenuBar();
+    JMenu menuGame = new JMenu("Game");
+    JMenuItem itemGame1D = new JMenuItem("Game 1D");
+    JMenuItem itemGame2D = new JMenuItem("Game 2D");
+    menuBar.add(menuGame);
+
+    itemGame2D.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame2D();
+        GUI.grid.update();
+      }
+    });
+
+    itemGame1D.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.grid.update();
+      }
+    });
+
+    menuGame.add(itemGame1D);
+    menuGame.add(itemGame2D);
+
+    GUI.frame.setJMenuBar(menuBar);
+  }
+
+  public static void initGame2D() {
+    GUI.game = new Game2D(GUI.width, GUI.height);
+    GUI.removeGrid();
+    GUI.grid = new Grid2D();
+    GUI.mainPanel.add(GUI.grid);
+    GUI.grid.update();
+    GUI.mainPanel.validate();
+    GUI.play.pause();
+  }
+
+  public static void initGame1D() {
+    GUI.game = new Game1D(GUI.width);
+    GUI.removeGrid();
+    GUI.grid = new Grid1D();
+    GUI.mainPanel.add(GUI.grid);
+    GUI.mainPanel.validate();
+    GUI.play.pause();
+  }
+
+  private static void removeGrid() {
+    try{
+      GUI.mainPanel.remove(GUI.grid);
+    }
+    catch(Exception e) {}
   }
 }

@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.List;
 import java.util.*;
 
-class Game {
+abstract class Game {
   int length;
   int[] grid;
 
@@ -30,4 +30,6 @@ class Game {
       this.grid[i] = rand.nextInt(2);
     }
   }
+
+  abstract public void step();
 }
