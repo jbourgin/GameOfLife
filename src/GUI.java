@@ -9,8 +9,12 @@ public class GUI {
   public static JPanel mainPanel;
   public static JFrame frame;
 
+  public static JMenuBar menuBar = new JMenuBar();
+  public static JMenu menuGame = new JMenu("Game");
+  public static JMenuItem itemGame1D = new JMenuItem("Game 1D");
+  public static JMenuItem itemGame2D = new JMenuItem("Game 2D");
+
   private static void createAndShowGUI() {
-    Game2D game = new Game2D(GUI.width, GUI.height);
 
     GUI.frame = new JFrame("Game of Life");
     GUI.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,10 +22,34 @@ public class GUI {
     emptyLabel.setPreferredSize(new Dimension(175, 100));
     frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
     JFrame.setDefaultLookAndFeelDecorated(true);*/
-    Grid grid = new Grid(game);
     GUI.mainPanel = new JPanel();
-    Play play = new Play(game,grid);
-    GUI.mainPanel.add(grid);
+
+    menuBar.add(menuGame);
+
+    itemGame2D.addActionListener(new ActionListener() {
+        //@override
+        public void actionPerformed(ActionEvent e) {
+            Game2D game = new Game2D(GUI.width, GUI.height);
+            Grid grid = new Grid(game);
+            Play play = new Play(game,grid);
+            GUI.mainPanel.add(grid);
+        }
+    });
+
+    itemGame1D.addActionListener(new ActionListener() {
+        //@override
+        public void actionPerformed(ActionEvent e) {
+            Game1D game = new Game1D(GUI.width * GUI.height);
+            Grid1 grid = new Grid1(game);
+            Play play = new Play(game,grid);
+            GUI.mainPanel.add(grid);
+        }
+    });
+
+    menuGame.add(itemGame1D);
+    menuGame.add(itemGame2D);
+
+    GUI.frame.setJMenuBar(menuBar);
 
     JButton step = new JButton("Step");
     step.addActionListener(new ActionListener() {
@@ -39,10 +67,13 @@ public class GUI {
       }
     });
 
+    JTextField delayValue = new JTextField();
+
     JButton accel = new JButton("+");
     accel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         play.accelerate();
+        delayValue.setText(Integer.toString(play.playGame.getDelay()));
       }
     });
 
@@ -50,9 +81,11 @@ public class GUI {
     decel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         play.decelerate();
+        delayValue.setText(Integer.toString(play.playGame.getDelay()));
       }
     });
 
+    GUI.mainPanel.add(delayValue);
     GUI.mainPanel.add(random);
     GUI.mainPanel.add(step);
     GUI.mainPanel.add(play);

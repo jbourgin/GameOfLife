@@ -22,11 +22,15 @@ public class Play extends JButton implements ActionListener {
   }
 
   public void accelerate() {
-    this.playGame.setDelay(this.playGame.getDelay()/2);
+      if(this.playGame.getDelay() > 12.5) {
+        this.playGame.setDelay(this.playGame.getDelay()/2);
+    }
   }
 
   public void decelerate() {
-    this.playGame.setDelay(this.playGame.getDelay()*2);
+      if(this.playGame.getDelay() < 800) {
+          this.playGame.setDelay(this.playGame.getDelay()*2);
+      }
   }
 
   public void actionPerformed(ActionEvent e) {
