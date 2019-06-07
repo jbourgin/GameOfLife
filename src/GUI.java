@@ -4,13 +4,14 @@ import javax.swing.*;
 
 public class GUI {
 
-  static int width = 100;
-  static int height = 100;
+  static int width = 80;
+  static int height = 80;
   public static JPanel mainPanel;
+  public static ButtonPanel buttonPanel;
+  public static JPanel gridPanel;
   public static JFrame frame;
   public static Game game;
   public static Grid grid;
-  public static Play play;
 
   private static void createAndShowGUI() {
 
@@ -21,54 +22,16 @@ public class GUI {
     frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
     JFrame.setDefaultLookAndFeelDecorated(true);*/
     GUI.mainPanel = new JPanel();
+    GUI.mainPanel.setLayout(new BoxLayout(GUI.mainPanel, BoxLayout.Y_AXIS));
+    GUI.gridPanel = new JPanel();
+    GUI.buttonPanel = new ButtonPanel();
     GUI.setMenu();
-    GUI.play = new Play();
     GUI.initGame2D();
-    GUI.mainPanel.add(GUI.grid);
-
-    JButton step = new JButton("Step");
-    step.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        GUI.game.step();
-        GUI.grid.update();
-      }
-    });
-
-    JButton random = new JButton("Random");
-    random.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        GUI.game.initRandom();
-        GUI.grid.update();
-      }
-    });
-
-    JTextField delayValue = new JTextField();
-    delayValue.setText(Integer.toString(play.playGame.getDelay()));
-
-    JButton accel = new JButton("+");
-    accel.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        GUI.play.accelerate();
-        delayValue.setText(Integer.toString(play.playGame.getDelay()));
-      }
-    });
-
-    JButton decel = new JButton("-");
-    decel.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        GUI.play.decelerate();
-        delayValue.setText(Integer.toString(play.playGame.getDelay()));
-      }
-    });
-
-    GUI.mainPanel.add(delayValue);
-    GUI.mainPanel.add(random);
-    GUI.mainPanel.add(step);
-    GUI.mainPanel.add(play);
-    GUI.mainPanel.add(accel);
-    GUI.mainPanel.add(decel);
+    GUI.gridPanel.add(GUI.grid);
 
     GUI.frame.add(mainPanel);
+    GUI.mainPanel.add(gridPanel);
+    GUI.mainPanel.add(buttonPanel);
 
     GUI.frame.pack();
 
@@ -111,24 +74,24 @@ public class GUI {
     GUI.game = new Game2D(GUI.width, GUI.height);
     GUI.removeGrid();
     GUI.grid = new Grid2D();
-    GUI.mainPanel.add(GUI.grid);
+    GUI.gridPanel.add(GUI.grid);
     GUI.grid.update();
     GUI.mainPanel.validate();
-    GUI.play.pause();
+    GUI.buttonPanel.play.pause();
   }
 
   public static void initGame1D() {
     GUI.game = new Game1D(GUI.width);
     GUI.removeGrid();
     GUI.grid = new Grid1D();
-    GUI.mainPanel.add(GUI.grid);
+    GUI.gridPanel.add(GUI.grid);
     GUI.mainPanel.validate();
-    GUI.play.pause();
+    GUI.buttonPanel.play.pause();
   }
 
   private static void removeGrid() {
     try{
-      GUI.mainPanel.remove(GUI.grid);
+      GUI.gridPanel.remove(GUI.grid);
     }
     catch(Exception e) {}
   }

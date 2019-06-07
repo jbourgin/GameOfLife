@@ -8,7 +8,7 @@ public class Cell extends JButton implements ActionListener {
   static int size = 10;
 
   public Cell(int i) {
-    super();;
+    super();
     this.i = i;
     this.setPreferredSize(new Dimension(Cell.size,Cell.size));
     addActionListener(this);
