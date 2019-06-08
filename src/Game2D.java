@@ -86,9 +86,17 @@ class Game2D extends Game {
   public int[] applyRLE(List<String> file) {
     int elements[] = new int[2];
     String lineWidth = file.get(1);
-    int[] widthElements = getWidth(lineWidth);
+    int[] widthElements = getElements(lineWidth, 0);
     elements[0] = widthElements[0];
-    elements[1] = getHeight(lineWidth, widthElements[1]);
+    int[] heightElements = getElements(lineWidth, widthElements[1]);
+    elements[1] = heightElements[0];
+    if(lineWidth.indexOf("max") > -1) {
+        int[] maxElements = getElements(lineWidth, heightElements[1]);
+        stepMax = maxElements[0];
+    }
+    else {
+        stepMax = 9999;
+    }
     int currentGridLine = (GUI.height - elements[1])/2 + 1 ;
     int currentCell = currentGridLine*GUI.width+((GUI.width - elements[0])/2);
     int numberbCells;
@@ -148,20 +156,13 @@ class Game2D extends Game {
     return elements;
   }
 
-  public int[] getWidth(String lineWidth) {
+  public int[] getElements(String lineWidth, int minIndex) {
     int elements[] = new int[2];
-    int minIndex = 0;
     int equalIndex = lineWidth.indexOf('=', minIndex);
     int commaIndex = lineWidth.indexOf(',', minIndex);
     elements[0] = Integer.parseInt(lineWidth.substring(equalIndex+2,commaIndex));
     elements[1] = commaIndex + 1;
     return elements;
-  }
-
-  public int getHeight(String lineWidth, int minIndex) {
-    int equalIndex = lineWidth.indexOf('=', minIndex);
-    int commaIndex = lineWidth.indexOf(',', minIndex);
-    return Integer.parseInt(lineWidth.substring(equalIndex+2,commaIndex));
   }
 
   public List<String> readRLE(String filename) {

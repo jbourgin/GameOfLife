@@ -6,6 +6,7 @@ abstract class Game {
   int length;
   int[] grid;
   int currentStep;
+  public static int stepMax;
 
   Game(int length) {
     this.length = length;
@@ -30,5 +31,8 @@ abstract class Game {
   public void step() {
     this.currentStep++;
     ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
+    if(this.currentStep >= GUI.game.stepMax) {
+        GUI.buttonPanel.play.pause();
+    }
   };
 }

@@ -21,6 +21,7 @@ public class Cell extends JButton implements ActionListener {
     else {
       this.setBackground(Color.white);
     }
+    //this.repaint();
   }
 
   public void actionPerformed(ActionEvent e) {

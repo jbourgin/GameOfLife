@@ -16,11 +16,12 @@ public class GUI {
   public static String defaultGame;
   public static JMenuItem rules1D;
   public static JMenuItem config2D;
+  public static File selectedFile;
 
   private static void createAndShowGUI() {
 
     GUI.frame = new JFrame("Game of Life");
-    GUI.defaultGame = "dartSynth.rle";
+    GUI.defaultGame = "clown.rle";
     GUI.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     /*JLabel emptyLabel = new JLabel("");
     emptyLabel.setPreferredSize(new Dimension(175, 100));
@@ -86,8 +87,8 @@ public class GUI {
         fileChooser.setCurrentDirectory(new File("../rle/"));
         int result = fileChooser.showOpenDialog(GUI.frame);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            GUI.initGame2D(GUI.width, GUI.height, selectedFile.getName());
+            GUI.selectedFile = fileChooser.getSelectedFile();
+            GUI.initGame2D(GUI.width, GUI.height, GUI.selectedFile.getName());
             GUI.grid.update();
           }
         }
