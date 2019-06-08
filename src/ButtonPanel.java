@@ -5,6 +5,7 @@ import javax.swing.*;
 public class ButtonPanel extends JPanel {
 
   public Play play;
+  public static JTextField stepValue;
 
   ButtonPanel() {
     super();
@@ -25,8 +26,20 @@ public class ButtonPanel extends JPanel {
       }
     });
 
+    JButton reset = new JButton("Reset");
+    reset.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.grid.update();
+        ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
+      }
+    });
+
     JTextField delayValue = new JTextField();
     delayValue.setText(Integer.toString(play.playGame.getDelay()));
+
+    ButtonPanel.stepValue = new JTextField();
+    ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
 
     JButton accel = new JButton("+");
     accel.addActionListener(new ActionListener() {
@@ -45,10 +58,12 @@ public class ButtonPanel extends JPanel {
     });
 
     this.add(delayValue);
+    this.add(stepValue);
     this.add(play);
     this.add(accel);
     this.add(decel);
     this.add(step);
     this.add(random);
+    this.add(reset);
   }
 }

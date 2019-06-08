@@ -14,6 +14,8 @@ public class GUI {
   public static Game game;
   public static Grid grid;
   public static String defaultGame;
+  public static JMenuItem rules1D;
+  public static JMenuItem config2D;
 
   private static void createAndShowGUI() {
 
@@ -27,9 +29,9 @@ public class GUI {
     GUI.mainPanel = new JPanel();
     GUI.mainPanel.setLayout(new BoxLayout(GUI.mainPanel, BoxLayout.Y_AXIS));
     GUI.gridPanel = new JPanel();
-    GUI.buttonPanel = new ButtonPanel();
     GUI.setMenu();
     GUI.initGame2D(GUI.width, GUI.height, GUI.defaultGame);
+    GUI.buttonPanel = new ButtonPanel();
     GUI.gridPanel.add(GUI.grid);
 
     GUI.frame.add(mainPanel);
@@ -52,8 +54,8 @@ public class GUI {
     JMenuItem itemGame1D = new JMenuItem("Game 1D");
     JMenuItem itemGame2D = new JMenuItem("Game 2D");
     JMenu menuConfig = new JMenu("Config");
-    JMenuItem rules1D = new JMenuItem("Rules 1D");
-    JMenuItem config2D = new JMenuItem("Configurations 2D");
+    GUI.rules1D = new JMenuItem("Rules 1D");
+    GUI.config2D = new JMenuItem("Configurations 2D");
     menuBar.add(menuGame);
     menuBar.add(menuConfig);
 
@@ -71,14 +73,14 @@ public class GUI {
       }
     });
 
-    rules1D.addActionListener(new ActionListener() {
+    GUI.rules1D.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.grid.update();
       }
     });
 
-    config2D.addActionListener(new ActionListener() {
+    GUI.config2D.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("../rle/"));
@@ -94,8 +96,8 @@ public class GUI {
     menuGame.add(itemGame1D);
     menuGame.add(itemGame2D);
 
-    menuConfig.add(rules1D);
-    menuConfig.add(config2D);
+    menuConfig.add(GUI.rules1D);
+    menuConfig.add(GUI.config2D);
 
     GUI.frame.setJMenuBar(menuBar);
   }
@@ -107,7 +109,13 @@ public class GUI {
     GUI.gridPanel.add(GUI.grid);
     GUI.grid.update();
     GUI.mainPanel.validate();
-    GUI.buttonPanel.play.pause();
+    try
+    {
+      GUI.buttonPanel.play.pause();
+    }
+    catch (NullPointerException npe) {}
+    GUI.rules1D.setEnabled(false);
+    GUI.config2D.setEnabled(true);
   }
 
   public static void initGame1D() {
@@ -117,6 +125,8 @@ public class GUI {
     GUI.gridPanel.add(GUI.grid);
     GUI.mainPanel.validate();
     GUI.buttonPanel.play.pause();
+    GUI.rules1D.setEnabled(true);
+    GUI.config2D.setEnabled(false);
   }
 
   private static void removeGrid() {

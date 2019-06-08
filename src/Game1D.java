@@ -100,6 +100,7 @@ class Game1D extends Game {
   }
 
     public void step() {
+      super.step();
       int[] newGrid = new int[this.length];
       for(int i = 0; i < this.length; i++){
           newGrid[i] = cellStatus110(i);

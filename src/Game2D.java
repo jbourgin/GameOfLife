@@ -73,6 +73,7 @@ class Game2D extends Game {
   }
 
   public void step() {
+    super.step();
     int[] newGrid = new int[this.width * this.height];
     for(int i = 0; i < this.height; i++){
       for(int j = 0; j < this.width; j++){
@@ -88,8 +89,6 @@ class Game2D extends Game {
     int[] widthElements = getWidth(lineWidth);
     elements[0] = widthElements[0];
     elements[1] = getHeight(lineWidth, widthElements[1]);
-    System.out.println(elements[0]);
-    System.out.println(elements[1]);
     int currentGridLine = (GUI.height - elements[1])/2 + 1 ;
     int currentCell = currentGridLine*GUI.width+((GUI.width - elements[0])/2);
     int numberbCells;
@@ -117,14 +116,12 @@ class Game2D extends Game {
         }
         int minList = Collections.min(testList);
         if(minList == dollarIndex || minList == exclamIndex) {
-          System.out.println("$" + dollarIndex);
           for(int j = currentCell; j < GUI.width*currentGridLine ; j++){
             this.grid[j] = 0;
           }
           currentGridLine++;
           currentCell = currentGridLine*GUI.width+((GUI.width - elements[0])/2);
         } else if(minList == bIndex) {
-          System.out.println("b" + bIndex);
           if(bIndex - minIndex > 0) {
             numberbCells = Integer.parseInt(currentLine.substring(minIndex,bIndex));
           } else {
@@ -135,7 +132,6 @@ class Game2D extends Game {
           }
           currentCell = currentCell + numberbCells;
         } else if(minList == oIndex) {
-          System.out.println("o" + oIndex);
           if(oIndex - minIndex > 0) {
             numberoCells = Integer.parseInt(currentLine.substring(minIndex,oIndex));
           } else {
@@ -147,8 +143,6 @@ class Game2D extends Game {
           currentCell = currentCell + numberoCells;
         }
         minIndex = minList+1;
-        System.out.println(minIndex);
-        //System.out.println(currentCell);
       }
     }
     return elements;
