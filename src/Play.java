@@ -47,7 +47,7 @@ public class Play extends JButton implements ActionListener {
       this.playGame.start();
       this.playing = true;
       this.setText("Pause");
-      GUI.frame.pack();
+      //GUI.frame.pack();
     }
   }
 }

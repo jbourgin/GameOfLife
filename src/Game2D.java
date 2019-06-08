@@ -1,9 +1,16 @@
+import java.util.*;
+import java.io.*;
+
 class Game2D extends Game {
   int width;
   int height;
+  List<String> file;
+  int[] gridSize;
 
-  Game2D(int width, int height) {
+  Game2D(int width, int height, String rlefile) {
     super(width * height);
+    this.file = readRLE("../rle/" + rlefile);
+    gridSize = applyRLE(this.file);
     this.width = width;
     this.height = height;
   }
@@ -74,4 +81,115 @@ class Game2D extends Game {
     }
     this.grid = newGrid;
   }
+
+  public int[] applyRLE(List<String> file) {
+    int elements[] = new int[2];
+    String lineWidth = file.get(1);
+    int[] widthElements = getWidth(lineWidth);
+    elements[0] = widthElements[0];
+    elements[1] = getHeight(lineWidth, widthElements[1]);
+    System.out.println(elements[0]);
+    System.out.println(elements[1]);
+    int currentGridLine = (GUI.height - elements[1])/2 + 1 ;
+    int currentCell = currentGridLine*GUI.width+((GUI.width - elements[0])/2);
+    int numberbCells;
+    int numberoCells;
+    for (int i = 2; i < file.size(); i++) {
+      String currentLine = file.get(i);
+      int minIndex = 0;
+      while(minIndex <= currentLine.length() -1) {
+        List<Integer> testList = new ArrayList<Integer>();
+        int exclamIndex = currentLine.indexOf('$', minIndex);
+        int dollarIndex = currentLine.indexOf('!', minIndex);
+        int bIndex = currentLine.indexOf('b', minIndex);
+        int oIndex = currentLine.indexOf('o', minIndex);
+        if(bIndex > -1) {
+          testList.add(bIndex);
+        }
+        if(dollarIndex > -1) {
+          testList.add(dollarIndex);
+        }
+        if(oIndex > -1) {
+          testList.add(oIndex);
+        }
+        if(exclamIndex > -1) {
+          testList.add(exclamIndex);
+        }
+        int minList = Collections.min(testList);
+        if(minList == dollarIndex || minList == exclamIndex) {
+          System.out.println("$" + dollarIndex);
+          for(int j = currentCell; j < GUI.width*currentGridLine ; j++){
+            this.grid[j] = 0;
+          }
+          currentGridLine++;
+          currentCell = currentGridLine*GUI.width+((GUI.width - elements[0])/2);
+        } else if(minList == bIndex) {
+          System.out.println("b" + bIndex);
+          if(bIndex - minIndex > 0) {
+            numberbCells = Integer.parseInt(currentLine.substring(minIndex,bIndex));
+          } else {
+            numberbCells = 1;
+          }
+          for(int j = currentCell; j < currentCell+numberbCells ; j++){
+            this.grid[j] = 0;
+          }
+          currentCell = currentCell + numberbCells;
+        } else if(minList == oIndex) {
+          System.out.println("o" + oIndex);
+          if(oIndex - minIndex > 0) {
+            numberoCells = Integer.parseInt(currentLine.substring(minIndex,oIndex));
+          } else {
+            numberoCells = 1;
+          }
+          for(int j = currentCell; j < currentCell+numberoCells ; j++){
+            this.grid[j] = 1;
+          }
+          currentCell = currentCell + numberoCells;
+        }
+        minIndex = minList+1;
+        System.out.println(minIndex);
+        //System.out.println(currentCell);
+      }
+    }
+    return elements;
+  }
+
+  public int[] getWidth(String lineWidth) {
+    int elements[] = new int[2];
+    int minIndex = 0;
+    int equalIndex = lineWidth.indexOf('=', minIndex);
+    int commaIndex = lineWidth.indexOf(',', minIndex);
+    elements[0] = Integer.parseInt(lineWidth.substring(equalIndex+2,commaIndex));
+    elements[1] = commaIndex + 1;
+    return elements;
+  }
+
+  public int getHeight(String lineWidth, int minIndex) {
+    int equalIndex = lineWidth.indexOf('=', minIndex);
+    int commaIndex = lineWidth.indexOf(',', minIndex);
+    return Integer.parseInt(lineWidth.substring(equalIndex+2,commaIndex));
+  }
+
+  public List<String> readRLE(String filename) {
+    List<String> records = new ArrayList<String>();
+    try
+    {
+      BufferedReader reader = new BufferedReader(new FileReader(filename));
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+        records.add(line);
+      }
+      reader.close();
+      return records;
+    }
+    catch (Exception e)
+    {
+      System.err.format("Exception occurred trying to read '%s'.", filename);
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+
 }

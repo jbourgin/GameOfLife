@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Cell extends JButton implements ActionListener {
 
   int i;
-  static int size = 10;
+  static int size = 8;
 
   public Cell(int i) {
     super();
