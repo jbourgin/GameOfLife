@@ -4,6 +4,7 @@ class Game1D extends Game {
 
   Game1D(int length) {
     super(length);
+    this.grid[length/2] = 1;
   }
 
   public String toString() {
@@ -21,90 +22,12 @@ class Game1D extends Game {
     return s;
   }
 
-  public int neighboursClassic(int i) {
-    if(i == 0) {
-      return this.grid[i+1] + this.grid[i+2];
-    }
-    else if(i == 1) {
-      return this.grid[i-1] + this.grid[i+1] + this.grid[i+2];
-    }
-    else if(i == this.length-2) {
-      return this.grid[i-1] + this.grid[i-2] + this.grid[i+1];
-    }
-    else if(i == this.length-1) {
-      return this.grid[i-1] + this.grid[i-2];
-    }
-    else {
-      return this.grid[i-1] + this.grid[i-2] + this.grid[i+1] + this.grid[i+2];
-    }
-  }
-
-  public HashMap<String, Integer> neighboursSE(int i) {
-    HashMap<String, Integer> neighboursDic = new HashMap<String, Integer>();
-    if(i == 0) {
-      neighboursDic.put("Left", 0);
-      neighboursDic.put("Right", this.grid[i+1]);
-      return neighboursDic;
-    }
-    else if(i == this.length-1) {
-      neighboursDic.put("Left", this.grid[i-1]);
-      neighboursDic.put("Right", 0);
-      return neighboursDic;
-    }
-    else {
-      neighboursDic.put("Left", this.grid[i-1]);
-      neighboursDic.put("Right", this.grid[i+1]);
-      return neighboursDic;
-    }
-  }
-
-  public int cellStatus(int i) {
-    if(this.grid[i] == 1) {
-      switch(neighboursClassic(i)) {
-        case 2:
-        case 4:
-        return 1;
-        default: return 0;
+  public void step() {
+    super.step();
+    int[] newGrid = new int[this.length];
+    for(int i = 0; i < this.length; i++){
+        newGrid[i] = GUI.rule.cellStatus(i, this.grid);
       }
-    }
-    else {
-      switch(neighboursClassic(i)) {
-        case 2:
-        case 3:
-        return 1;
-        default: return 0;
-      }
-    }
-  }
-
-  public int cellStatus110(int i) {
-    if(this.grid[i] == 1) {
-      switch(neighboursSE(i).get("Left") + neighboursSE(i).get("Right")) {
-        case 2:
-        return 0;
-        default: return 1;
-      }
-    }
-    else {
-      if(neighboursSE(i).get("Left") == 1 && neighboursSE(i).get("Right") == 0) {
-        return 0;
-      }
-      else {
-        switch(neighboursSE(i).get("Left") + neighboursSE(i).get("Right")) {
-          case 0:
-          return 0;
-          default: return 1;
-        }
-      }
-    }
-  }
-
-    public void step() {
-      super.step();
-      int[] newGrid = new int[this.length];
-      for(int i = 0; i < this.length; i++){
-          newGrid[i] = cellStatus110(i);
-        }
-      this.grid = newGrid;
-  }
+    this.grid = newGrid;
+}
 }

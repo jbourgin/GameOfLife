@@ -6,6 +6,7 @@ public class ButtonPanel extends JPanel {
 
   public Play play;
   public static JTextField stepValue;
+  public static JTextField ruleValue;
   public static Dimension fieldDimension = new Dimension(40,20);
 
   ButtonPanel() {
@@ -50,6 +51,11 @@ public class ButtonPanel extends JPanel {
     ButtonPanel.stepValue.setMinimumSize(ButtonPanel.fieldDimension);
     ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
 
+    ButtonPanel.ruleValue = new JTextField();
+    ButtonPanel.ruleValue.setPreferredSize(ButtonPanel.fieldDimension);
+    ButtonPanel.ruleValue.setMinimumSize(ButtonPanel.fieldDimension);
+    ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+
     JButton accel = new JButton("+");
     accel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -68,6 +74,7 @@ public class ButtonPanel extends JPanel {
 
     this.add(delayValue);
     this.add(stepValue);
+    this.add(ruleValue);
     this.add(play);
     this.add(accel);
     this.add(decel);

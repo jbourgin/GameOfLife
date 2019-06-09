@@ -13,6 +13,7 @@ abstract class Game {
     this.grid = new int[length];
     this.initGrid();
     this.currentStep = 0;
+    Game.stepMax = 9999;
   }
 
   private void initGrid() {
@@ -31,7 +32,7 @@ abstract class Game {
   public void step() {
     this.currentStep++;
     ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
-    if(this.currentStep >= GUI.game.stepMax) {
+    if(this.currentStep == Game.stepMax) {
         GUI.buttonPanel.play.pause();
     }
   };

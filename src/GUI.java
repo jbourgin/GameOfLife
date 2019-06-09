@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class GUI {
 
@@ -14,19 +15,16 @@ public class GUI {
   public static Game game;
   public static Grid grid;
   public static String defaultGame;
-  public static JMenuItem rules1D;
+  public static JMenu rules1D;
   public static JMenuItem config2D;
   public static File selectedFile;
+  public static Rule rule;
 
   private static void createAndShowGUI() {
 
     GUI.frame = new JFrame("Game of Life");
     GUI.defaultGame = "clown.rle";
     GUI.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    /*JLabel emptyLabel = new JLabel("");
-    emptyLabel.setPreferredSize(new Dimension(175, 100));
-    frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-    JFrame.setDefaultLookAndFeelDecorated(true);*/
     GUI.mainPanel = new JPanel();
     GUI.mainPanel.setLayout(new BoxLayout(GUI.mainPanel, BoxLayout.Y_AXIS));
     GUI.gridPanel = new JPanel();
@@ -54,11 +52,73 @@ public class GUI {
     JMenu menuGame = new JMenu("Game");
     JMenuItem itemGame1D = new JMenuItem("Game 1D");
     JMenuItem itemGame2D = new JMenuItem("Game 2D");
+    JMenuItem rule50 = new JMenuItem("Rule 50");
+    JMenuItem rule73 = new JMenuItem("Rule 73");
+    JMenuItem rule110 = new JMenuItem("Rule 110");
+    JMenuItem rule250 = new JMenuItem("Rule 250");
+    JMenuItem rule254 = new JMenuItem("Rule 254");
+    JMenuItem ruleRandom = new JMenuItem("Random");
     JMenu menuConfig = new JMenu("Config");
-    GUI.rules1D = new JMenuItem("Rules 1D");
+    GUI.rules1D = new JMenu("Rules 1D");
     GUI.config2D = new JMenuItem("Configurations 2D");
     menuBar.add(menuGame);
     menuBar.add(menuConfig);
+
+    rule50.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.rule = new Rule(50);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        GUI.grid.update();
+      }
+    });
+
+    rule73.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.rule = new Rule(73);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        GUI.grid.update();
+      }
+    });
+
+    rule110.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.rule = new Rule(110);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        GUI.grid.update();
+      }
+    });
+
+    rule250.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.rule = new Rule(250);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        GUI.grid.update();
+      }
+    });
+
+    rule254.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        GUI.rule = new Rule(254);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        GUI.grid.update();
+      }
+    });
+
+    ruleRandom.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        GUI.initGame1D();
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(256) + 1;
+        GUI.rule = new Rule(randomInt);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        GUI.grid.update();
+      }
+    });
 
     itemGame2D.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -70,13 +130,8 @@ public class GUI {
     itemGame1D.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
-        GUI.grid.update();
-      }
-    });
-
-    GUI.rules1D.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        GUI.initGame1D();
+        GUI.rule = new Rule(110);
+        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -97,7 +152,13 @@ public class GUI {
     menuGame.add(itemGame1D);
     menuGame.add(itemGame2D);
 
-    menuConfig.add(GUI.rules1D);
+    menuConfig.add(rules1D);
+    GUI.rules1D.add(rule50);
+    GUI.rules1D.add(rule73);
+    GUI.rules1D.add(rule110);
+    GUI.rules1D.add(rule250);
+    GUI.rules1D.add(rule254);
+    GUI.rules1D.add(ruleRandom);
     menuConfig.add(GUI.config2D);
 
     GUI.frame.setJMenuBar(menuBar);

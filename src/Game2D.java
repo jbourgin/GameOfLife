@@ -29,7 +29,6 @@ class Game2D extends Game {
         else {
           s = s.concat("X");
         }
-        //s = s.concat(" ");
       }
       s = s.concat("\n");
     }
@@ -93,9 +92,6 @@ class Game2D extends Game {
     if(lineWidth.indexOf("max") > -1) {
         int[] maxElements = getElements(lineWidth, heightElements[1]);
         stepMax = maxElements[0];
-    }
-    else {
-        stepMax = 9999;
     }
     int currentGridLine = (GUI.height - elements[1])/2 + 1 ;
     int currentCell = currentGridLine*GUI.width+((GUI.width - elements[0])/2);
