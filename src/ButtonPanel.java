@@ -33,15 +33,20 @@ public class ButtonPanel extends JPanel {
           if(GUI.game instanceof Game1D) {
               GUI.initGame1D();
           } else {
+            try {
               GUI.initGame2D(GUI.width, GUI.height, GUI.selectedFile.getName());
+            }
+            catch(NullPointerException npe) {
+              GUI.initGame2D(GUI.width, GUI.height, GUI.defaultGame);
+            }
           }
         GUI.grid.update();
         ButtonPanel.stepField.textValue.setText(Integer.toString(GUI.game.currentStep));
       }
     });
 
-    TextPanel delayField = new TextPanel("Speed", play.playGame.getDelay());
-    delayField.textValue.setText(Integer.toString(play.playGame.getDelay()));
+    TextPanel delayField = new TextPanel("Speed", 1000/play.playGame.getDelay());
+    delayField.textValue.setText(Integer.toString(1000/play.playGame.getDelay()));
 
     ButtonPanel.stepField = new TextPanel("Step", GUI.game.currentStep);
     ButtonPanel.stepField.textValue.setText(Integer.toString(GUI.game.currentStep));
@@ -53,7 +58,7 @@ public class ButtonPanel extends JPanel {
     accel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         play.accelerate();
-        delayField.textValue.setText(Integer.toString(play.playGame.getDelay()));
+        delayField.textValue.setText(Integer.toString(1000/play.playGame.getDelay()));
       }
     });
 
@@ -61,7 +66,7 @@ public class ButtonPanel extends JPanel {
     decel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         play.decelerate();
-        delayField.textValue.setText(Integer.toString(play.playGame.getDelay()));
+        delayField.textValue.setText(Integer.toString(1000/play.playGame.getDelay()));
       }
     });
 

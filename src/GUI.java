@@ -22,7 +22,9 @@ public class GUI {
 
   private static void createAndShowGUI() {
 
+    ImageIcon img = new ImageIcon("../images/gol.jpeg");
     GUI.frame = new JFrame("Game of Life");
+    GUI.frame.setIconImage(img.getImage());
     GUI.defaultGame = "clown.rle";
     GUI.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     GUI.mainPanel = new JPanel();
@@ -192,9 +194,8 @@ public class GUI {
   }
 
   private static void removeGrid() {
-    try{
-      GUI.gridPanel.remove(GUI.grid);
+    if(GUI.gridPanel.getComponentCount() > 0) {
+      GUI.gridPanel.removeAll();
     }
-    catch(Exception e) {}
   }
 }

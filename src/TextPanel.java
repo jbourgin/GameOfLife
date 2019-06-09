@@ -1,16 +1,17 @@
 //import java.util.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
 class TextPanel extends JPanel {
 
-  public String textname;
   public JTextField textValue;
-  public static Dimension fieldDimension = new Dimension(40,20);
+  public static Dimension fieldDimension = new Dimension(50,20);
 
   TextPanel(String textName, int textValue) {
     super();
+    TitledBorder title = BorderFactory.createTitledBorder(textName);
 
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -18,7 +19,7 @@ class TextPanel extends JPanel {
     this.textValue.setPreferredSize(TextPanel.fieldDimension);
     this.textValue.setMinimumSize(TextPanel.fieldDimension);
 
-    this.add(new Label (textName));
+    this.setBorder(title);
     this.add(this.textValue);
 
   }
