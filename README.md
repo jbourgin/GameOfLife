@@ -42,7 +42,7 @@ The current rule is displayed in the *Rule* text field.
 
 1. __[JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)__
 
-    This program requires Java. It can be downloaded [here](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html.)
+    This program requires Java. It can be downloaded [here](https://java-jdk.fr.malavida.com/#gref)
 
 
 ### On Debian
