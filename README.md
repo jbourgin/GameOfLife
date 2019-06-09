@@ -68,7 +68,7 @@ build.bat
 
 **Step** advances one step of evolution, displayed in the *Step* text field.
 
-**Random** generates a random starting configuration, giving a random value to each cell.
+**Random** generates a random configuration, giving a random value to each cell.
 
 **Play** continues evolution automatically. Playing speed can be accelerated or decelerated through **+** or **-** buttons.
 
