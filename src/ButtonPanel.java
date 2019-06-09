@@ -5,9 +5,8 @@ import javax.swing.*;
 public class ButtonPanel extends JPanel {
 
   public Play play;
-  public static JTextField stepValue;
-  public static JTextField ruleValue;
-  public static Dimension fieldDimension = new Dimension(40,20);
+  public static TextPanel stepField;
+  public static TextPanel ruleField;
 
   ButtonPanel() {
     super();
@@ -37,30 +36,24 @@ public class ButtonPanel extends JPanel {
               GUI.initGame2D(GUI.width, GUI.height, GUI.selectedFile.getName());
           }
         GUI.grid.update();
-        ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
+        ButtonPanel.stepField.textValue.setText(Integer.toString(GUI.game.currentStep));
       }
     });
 
-    JTextField delayValue = new JTextField();
-    delayValue.setPreferredSize(ButtonPanel.fieldDimension);
-    delayValue.setMinimumSize(ButtonPanel.fieldDimension);
-    delayValue.setText(Integer.toString(play.playGame.getDelay()));
+    TextPanel delayField = new TextPanel("Speed", play.playGame.getDelay());
+    delayField.textValue.setText(Integer.toString(play.playGame.getDelay()));
 
-    ButtonPanel.stepValue = new JTextField();
-    ButtonPanel.stepValue.setPreferredSize(ButtonPanel.fieldDimension);
-    ButtonPanel.stepValue.setMinimumSize(ButtonPanel.fieldDimension);
-    ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
+    ButtonPanel.stepField = new TextPanel("Step", GUI.game.currentStep);
+    ButtonPanel.stepField.textValue.setText(Integer.toString(GUI.game.currentStep));
 
-    ButtonPanel.ruleValue = new JTextField();
-    ButtonPanel.ruleValue.setPreferredSize(ButtonPanel.fieldDimension);
-    ButtonPanel.ruleValue.setMinimumSize(ButtonPanel.fieldDimension);
-    ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+    ButtonPanel.ruleField = new TextPanel("Rule", GUI.rule.ruleNumber);
+    ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
 
     JButton accel = new JButton("+");
     accel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         play.accelerate();
-        delayValue.setText(Integer.toString(play.playGame.getDelay()));
+        delayField.textValue.setText(Integer.toString(play.playGame.getDelay()));
       }
     });
 
@@ -68,13 +61,13 @@ public class ButtonPanel extends JPanel {
     decel.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         play.decelerate();
-        delayValue.setText(Integer.toString(play.playGame.getDelay()));
+        delayField.textValue.setText(Integer.toString(play.playGame.getDelay()));
       }
     });
 
-    this.add(delayValue);
-    this.add(stepValue);
-    this.add(ruleValue);
+    this.add(delayField);
+    this.add(stepField);
+    this.add(ruleField);
     this.add(play);
     this.add(accel);
     this.add(decel);

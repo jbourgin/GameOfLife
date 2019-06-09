@@ -68,7 +68,7 @@ public class GUI {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.rule = new Rule(50);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -77,7 +77,7 @@ public class GUI {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.rule = new Rule(73);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -86,7 +86,7 @@ public class GUI {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.rule = new Rule(110);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -95,7 +95,7 @@ public class GUI {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.rule = new Rule(250);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -104,7 +104,7 @@ public class GUI {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.rule = new Rule(254);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -115,7 +115,7 @@ public class GUI {
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(256) + 1;
         GUI.rule = new Rule(randomInt);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });
@@ -131,7 +131,7 @@ public class GUI {
       public void actionPerformed(ActionEvent e) {
         GUI.initGame1D();
         GUI.rule = new Rule(110);
-        ButtonPanel.ruleValue.setText(Integer.toString(GUI.rule.ruleNumber));
+        ButtonPanel.ruleField.textValue.setText(Integer.toString(GUI.rule.ruleNumber));
         GUI.grid.update();
       }
     });

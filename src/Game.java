@@ -31,7 +31,7 @@ abstract class Game {
 
   public void step() {
     this.currentStep++;
-    ButtonPanel.stepValue.setText(Integer.toString(GUI.game.currentStep));
+    ButtonPanel.stepField.textValue.setText(Integer.toString(GUI.game.currentStep));
     if(this.currentStep == Game.stepMax) {
         GUI.buttonPanel.play.pause();
     }
